@@ -75,9 +75,16 @@
       </div>
     </div>
   </form>
-  <p *ngIf="isSelfRegistrationAllowed" class="mb-1">
-    <a [routerLink]="['../register']">
-      <i class="fa fa-plus-circle"></i> {{ "Register" | localize }}
-    </a>
-  </p>
+  <div class="d-flex flex-column align-items-center">
+    <asl-google-signin-button
+      class=""
+      type="’icon’"
+      size="’medium’"
+    ></asl-google-signin-button>
+    <p *ngIf="isSelfRegistrationAllowed" class="mb-1 mt-4">
+      <a [routerLink]="['../register']">
+        <i class="fa fa-plus-circle"></i> {{ "Register" | localize }}
+      </a>
+    </p>
+  </div>
 </div>

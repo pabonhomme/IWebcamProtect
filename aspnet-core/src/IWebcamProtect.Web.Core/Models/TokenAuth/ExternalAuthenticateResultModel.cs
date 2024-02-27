@@ -11,4 +11,3 @@
         public bool WaitingForActivation { get; set; }
     }
 }
-}

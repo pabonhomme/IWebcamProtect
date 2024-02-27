@@ -19,4 +19,8 @@ export class AppConsts {
     static readonly authorization = {
         encryptedAuthTokenName: 'enc_auth_token'
     };
+
+    static googleAuth = {
+        clientId: "799185370725-c0e5aol1ahr93ovhteff5j9gvho0mu8a.apps.googleusercontent.com"
+    }
 }

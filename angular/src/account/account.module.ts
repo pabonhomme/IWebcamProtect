@@ -17,6 +17,7 @@ import { AccountFooterComponent } from './layout/account-footer.component';
 // tenants
 import { TenantChangeComponent } from './tenant/tenant-change.component';
 import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.component';
+import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.compo
         SharedModule,
         ServiceProxyModule,
         AccountRoutingModule,
+        GoogleSigninButtonModule,
         ModalModule.forChild()
     ],
     declarations: [

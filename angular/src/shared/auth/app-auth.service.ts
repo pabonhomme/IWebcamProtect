@@ -7,13 +7,17 @@ import { UrlHelper } from '@shared/helpers/UrlHelper';
 import {
     AuthenticateModel,
     AuthenticateResultModel,
+    ExternalAuthenticateModel,
+    ExternalAuthenticateResultModel,
     TokenAuthServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 
 @Injectable()
 export class AppAuthService {
     authenticateModel: AuthenticateModel;
+    externalAuthenticateModel: ExternalAuthenticateModel;
     authenticateResult: AuthenticateResultModel;
+    externalAuthenticateResult: ExternalAuthenticateResultModel;
     rememberMe: boolean;
 
     constructor(
@@ -54,6 +58,42 @@ export class AppAuthService {
         authenticateResult: AuthenticateResultModel
     ) {
         this.authenticateResult = authenticateResult;
+
+        if (authenticateResult.accessToken) {
+            // Successfully logged in
+            this.login(
+                authenticateResult.accessToken,
+                authenticateResult.encryptedAccessToken,
+                authenticateResult.expireInSeconds,
+                this.rememberMe
+            );
+        } else {
+            // Unexpected result!
+
+            this._logService.warn('Unexpected authenticateResult!');
+            this._router.navigate(['account/login']);
+        }
+    }
+
+    externalAuthenticate(finallyCallback?: () => void): void {
+        finallyCallback = finallyCallback || (() => { });
+
+        this._tokenAuthService
+            .externalAuthenticate(this.externalAuthenticateModel)
+            .pipe(
+                finalize(() => {
+                    finallyCallback();
+                })
+            )
+            .subscribe((result: ExternalAuthenticateResultModel) => {
+                this.processExternalAuthenticateResult(result);
+            });
+    }
+
+    private processExternalAuthenticateResult(
+        authenticateResult: ExternalAuthenticateResultModel
+    ) {
+        this.externalAuthenticateResult = authenticateResult;
 
         if (authenticateResult.accessToken) {
             // Successfully logged in
