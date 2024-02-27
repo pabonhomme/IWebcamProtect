@@ -3,7 +3,7 @@ import { AbpSessionService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/app-component-base';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppAuthService } from '@shared/auth/app-auth.service';
-import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   templateUrl: './login.component.html',
@@ -22,13 +22,13 @@ export class LoginComponent extends AppComponentBase implements OnInit{
   }
 
   ngOnInit(): void {
-    this.socialAuthService.authState.subscribe((user) => {
+    this.socialAuthService.authState.subscribe((user : SocialUser) => {
       console.log(user)
-      // this.externalLogin(
-      //   "ExternalAuth",
-      //   response.uniqueId,
-      //   response.accessToken
-      // );
+      this.externalLogin(
+        "ExternalAuth",
+        user.id,
+        user.idToken
+      );
     });
   }
 

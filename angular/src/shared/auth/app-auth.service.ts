@@ -140,6 +140,7 @@ export class AppAuthService {
 
     private clear(): void {
         this.authenticateModel = new AuthenticateModel();
+        this.externalAuthenticateModel = new ExternalAuthenticateModel();
         this.authenticateModel.rememberClient = false;
         this.authenticateResult = null;
         this.rememberMe = false;
