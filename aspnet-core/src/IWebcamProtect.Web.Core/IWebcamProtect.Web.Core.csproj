@@ -23,6 +23,7 @@
     <ProjectReference Include="..\IWebcamProtect.EntityFrameworkCore\IWebcamProtect.EntityFrameworkCore.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth" Version="1.67.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Abp.AspNetCore" Version="8.4.0" />

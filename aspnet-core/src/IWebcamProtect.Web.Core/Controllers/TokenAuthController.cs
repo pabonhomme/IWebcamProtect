@@ -46,7 +46,7 @@ namespace IWebcamProtect.Controllers
             _tenantCache = tenantCache;
             _abpLoginResultTypeHelper = abpLoginResultTypeHelper;
             _configuration = configuration;
-            this._externalAuthConfiguration = externalAuthConfiguration;
+            _externalAuthConfiguration = externalAuthConfiguration;
             _externalAuthManager = externalAuthManager;
             _userRegistrationManager = userRegistrationManager;
         }
