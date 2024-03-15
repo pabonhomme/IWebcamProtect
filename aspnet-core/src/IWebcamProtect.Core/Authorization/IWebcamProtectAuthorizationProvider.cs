@@ -19,6 +19,11 @@ namespace IWebcamProtect.Authorization
             entityTypes_perm.CreateChildPermission(PermissionNames.Pages_EntityType_Read, L("ReadEntityTypes"));
             entityTypes_perm.CreateChildPermission(PermissionNames.Pages_EntityType_Edit, L("EditEntityTypes"));
             entityTypes_perm.CreateChildPermission(PermissionNames.Pages_EntityType_Delete, L("DeleteEntityTypes"));
+
+            var camera_perm = context.CreatePermission(PermissionNames.Pages_Camera, L("Cameras"));
+            camera_perm.CreateChildPermission(PermissionNames.Pages_Camera_Read, L("ReadCameras"));
+            camera_perm.CreateChildPermission(PermissionNames.Pages_Camera_Edit, L("EditCameras"));
+            camera_perm.CreateChildPermission(PermissionNames.Pages_Camera_Delete, L("DeleteCameras"));
         }
 
         private static ILocalizableString L(string name)

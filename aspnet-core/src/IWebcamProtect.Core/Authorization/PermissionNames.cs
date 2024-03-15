@@ -13,5 +13,10 @@
         public const string Pages_EntityType_Read = "Pages.EntityType.Read";
         public const string Pages_EntityType_Edit = "Pages.EntityType.Edit";
         public const string Pages_EntityType_Delete = "Pages.EntityType.Delete";
+
+        public const string Pages_Camera = "Pages.Camera";
+        public const string Pages_Camera_Read = "Pages.Camera.Read";
+        public const string Pages_Camera_Edit = "Pages.Camera.Edit";
+        public const string Pages_Camera_Delete = "Pages.Camera.Delete";
     }
 }

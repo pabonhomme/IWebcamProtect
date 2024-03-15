@@ -12,6 +12,8 @@ namespace IWebcamProtect.EntityFrameworkCore
         /* Define a DbSet for each entity of the application */
         public virtual DbSet<EntityType> EntityTypes { get; set; }
 
+        public virtual DbSet<Camera> Cameras { get; set; }
+
         public IWebcamProtectDbContext(DbContextOptions<IWebcamProtectDbContext> options)
             : base(options)
         {
