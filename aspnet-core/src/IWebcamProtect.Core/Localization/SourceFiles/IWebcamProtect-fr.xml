@@ -43,5 +43,12 @@
     <text name="TenantSelection_Detail" value="Veuillez choisir l'un de ces clients (tenants) suivants." />
     <text name="Logout" value="Déconnexion" />
     <text name="SearchWithThreeDot">Rechercher...</text>
+
+    <!--Permissions-->
+
+    <text name="EntityTypes">Types d'entité</text>
+    <text name="ReadEntityTypes">Voir les types d'entité</text>
+    <text name="EditEntityTypes">Modifier les types d'entité (Activer/Désactiver)</text>
+    <text name="DeleteEntityTypes">Supprimer des types d'entité</text>
   </texts>
 </localizationDictionary>

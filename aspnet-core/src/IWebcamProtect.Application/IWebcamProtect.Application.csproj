@@ -14,4 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\IWebcamProtect.Core\IWebcamProtect.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EntityTypes\Input\" />
+  </ItemGroup>
 </Project>
