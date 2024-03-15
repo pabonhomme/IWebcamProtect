@@ -4,6 +4,7 @@ using IWebcamProtect.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IWebcamProtect.Migrations
 {
     [DbContext(typeof(IWebcamProtectDbContext))]
-    partial class IWebcamProtectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240315215159_DetectionEvent")]
+    partial class DetectionEvent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1637,9 +1640,6 @@ namespace IWebcamProtect.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CameraId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("DetectedTime")
                         .HasColumnType("datetime2");
 
@@ -1650,8 +1650,6 @@ namespace IWebcamProtect.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CameraId");
 
                     b.HasIndex("EntityTypeId");
 
@@ -1988,19 +1986,11 @@ namespace IWebcamProtect.Migrations
 
             modelBuilder.Entity("IWebcamProtect.Models.DetectionEvent", b =>
                 {
-                    b.HasOne("IWebcamProtect.Models.Camera", "Camera")
-                        .WithMany("DetectionEvents")
-                        .HasForeignKey("CameraId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("IWebcamProtect.Models.EntityType", "EntityType")
                         .WithMany()
                         .HasForeignKey("EntityTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Camera");
 
                     b.Navigation("EntityType");
                 });
@@ -2101,11 +2091,6 @@ namespace IWebcamProtect.Migrations
                     b.Navigation("Settings");
 
                     b.Navigation("Tokens");
-                });
-
-            modelBuilder.Entity("IWebcamProtect.Models.Camera", b =>
-                {
-                    b.Navigation("DetectionEvents");
                 });
 #pragma warning restore 612, 618
         }

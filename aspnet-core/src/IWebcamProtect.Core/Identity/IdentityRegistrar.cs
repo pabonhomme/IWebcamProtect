@@ -5,6 +5,7 @@ using IWebcamProtect.Authorization.Roles;
 using IWebcamProtect.Authorization.Users;
 using IWebcamProtect.Editions;
 using IWebcamProtect.MultiTenancy;
+using IWebcamProtect.Managers.DetectionEvents;
 
 namespace IWebcamProtect.Identity
 {
@@ -13,6 +14,9 @@ namespace IWebcamProtect.Identity
         public static IdentityBuilder Register(IServiceCollection services)
         {
             services.AddLogging();
+
+            services.AddScoped<IDetectionEventManager, DetectionEventManager>();
+
 
             return services.AddAbpIdentity<Tenant, User, Role>()
                 .AddAbpTenantManager<TenantManager>()

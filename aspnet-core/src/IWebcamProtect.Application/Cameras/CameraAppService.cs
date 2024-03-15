@@ -6,6 +6,7 @@ using Abp.UI;
 using IWebcamProtect.Authorization;
 using IWebcamProtect.Cameras.Dto;
 using IWebcamProtect.Cameras.Input;
+using IWebcamProtect.Managers.DetectionEvents;
 using IWebcamProtect.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,16 +21,32 @@ namespace IWebcamProtect.Cameras
     [AbpAuthorize(PermissionNames.Pages_Camera)]
     public class CameraAppService : AsyncCrudAppService<Camera, CameraDto, int, GetAllCameraInput, CreateCameraInput, UpdateCameraInput, GetCameraInput, DeleteCameraInput>, ICameraAppService
     {
-        public CameraAppService(IRepository<Camera, int> repository) : base(repository)
+        private readonly IDetectionEventManager _detectionEventManager;
+        public CameraAppService(IRepository<Camera, int> repository, IDetectionEventManager detectionEventManager) : base(repository)
         {
             LocalizationSourceName = IWebcamProtectConsts.LocalizationSourceName;
             GetPermissionName = PermissionNames.Pages_Camera_Read;
             DeletePermissionName = PermissionNames.Pages_Camera_Delete;
             CreatePermissionName = PermissionNames.Pages_Camera_Edit;
             UpdatePermissionName = PermissionNames.Pages_Camera_Edit;
+
+            _detectionEventManager= detectionEventManager;
         }
 
         #region GET
+
+        public override async Task<CameraDto> GetAsync(GetCameraInput input)
+        {
+            var query = Repository.GetAll().Where(e => e.Id == input.Id);
+
+            var entity = await AsyncQueryableExecuter.ToListAsync(query);
+
+            entity.FirstOrDefault().DetectionEvents = _detectionEventManager.GetAllByCamera(input.Id);
+
+            return MapToEntityDto(entity.FirstOrDefault());
+
+
+        }
 
         /// <summary>
         /// Get all the connected user's cameras

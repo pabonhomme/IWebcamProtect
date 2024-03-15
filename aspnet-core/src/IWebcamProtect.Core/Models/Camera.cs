@@ -14,5 +14,7 @@ namespace IWebcamProtect.Models
         public DateTime? WatchTimeStart { get; set; }
         public int WatchDuration { get; set; }
         public int State { get; set; }
+
+        public List<DetectionEvent> DetectionEvents { get; set; } = new List<DetectionEvent>();
     }
 }
