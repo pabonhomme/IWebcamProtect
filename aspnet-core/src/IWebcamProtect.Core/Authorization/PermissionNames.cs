@@ -18,5 +18,10 @@
         public const string Pages_Camera_Read = "Pages.Camera.Read";
         public const string Pages_Camera_Edit = "Pages.Camera.Edit";
         public const string Pages_Camera_Delete = "Pages.Camera.Delete";
+
+        public const string Pages_DetectionEvent = "Pages.DetectionEvent";
+        public const string Pages_DetectionEvent_Read = "Pages.DetectionEvent.Read";
+        public const string Pages_DetectionEvent_Edit = "Pages.DetectionEvent.Edit";
+        public const string Pages_DetectionEvent_Delete = "Pages.DetectionEvent.Delete";
     }
 }
