@@ -43,6 +43,7 @@ export class AppComponent extends AppComponentBase implements OnInit {
     });
 
     this.userPicture = this.appSession.user.picture;
+    if(!this.userPicture) this.userPicture = "assets/img/user.png"
   }
 
   toggleSidebar(): void {
