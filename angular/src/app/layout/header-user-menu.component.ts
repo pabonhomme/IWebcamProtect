@@ -1,5 +1,7 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { AppConsts } from '@shared/AppConsts';
 import { AppAuthService } from '@shared/auth/app-auth.service';
+import { UtilsService } from 'abp-ng2-module';
 
 @Component({
   selector: 'header-user-menu',
@@ -7,7 +9,13 @@ import { AppAuthService } from '@shared/auth/app-auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderUserMenuComponent {
-  constructor(private _authService: AppAuthService) {}
+  @Input() userPicture: string;
+
+  constructor(private _authService: AppAuthService, private _utilsService: UtilsService) { }
+
+  showUpdatePassword(): boolean {
+    return true;
+  }
 
   logout(): void {
     this._authService.logout();

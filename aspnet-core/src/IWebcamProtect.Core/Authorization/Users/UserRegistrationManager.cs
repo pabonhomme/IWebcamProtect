@@ -52,11 +52,45 @@ namespace IWebcamProtect.Authorization.Users
                 IsActive = true,
                 UserName = userName,
                 IsEmailConfirmed = isEmailConfirmed,
-                Roles = new List<UserRole>()
+                Roles = new List<UserRole>(),
             };
 
             user.SetNormalizedNames();
            
+            foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
+            {
+                user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
+            }
+
+            await _userManager.InitializeOptionsAsync(tenant.Id);
+
+            CheckErrors(await _userManager.CreateAsync(user, plainPassword));
+            await CurrentUnitOfWork.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async Task<User> RegisterExternalAsync(string name, string surname, string emailAddress, string userName, string plainPassword, bool isEmailConfirmed, string picture)
+        {
+            CheckForTenant();
+
+            var tenant = await GetActiveTenantAsync();
+
+            var user = new User
+            {
+                TenantId = tenant.Id,
+                Name = name,
+                Surname = surname,
+                EmailAddress = emailAddress,
+                IsActive = true,
+                UserName = userName,
+                IsEmailConfirmed = isEmailConfirmed,
+                Roles = new List<UserRole>(),
+                Picture = picture
+            };
+
+            user.SetNormalizedNames();
+
             foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
             {
                 user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));

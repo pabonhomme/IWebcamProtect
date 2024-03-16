@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          <h1>{{ "About" | localize }}</h1>
+          <h1>{{ "À propos" | localize }}</h1>
         </div>
       </div>
     </div>
@@ -12,122 +12,57 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-body">
+          <h2>Bienvenue dans le Projet iWebcamProtect</h2>
           <p>
-            This is a simple startup template based on ASP.NET Boilerplate
-            framework and Module Zero. If you need an enterprise startup
-            project, check
-            <a href="http://aspnetzero.com?ref=abptmpl" target="_blank">
-              ASP.NET ZERO </a
-            >.
-          </p>
-          <h3>What is ASP.NET Boilerplate?</h3>
-          <p>
-            ASP.NET Boilerplate is an application framework built on latest
-            <strong>ASP.NET Core</strong> framework. It makes easy to use
-            authorization, dependency injection, validation, exception handling,
-            localization, logging, caching, background jobs and so on. It's
-            built on already familiar tools like Entity Framework, AutoMapper,
-            Castle Windsor...
+            Nous sommes en dernière année de nos études d’ingénieur à l’ISIMA, l’Institut Supérieur d’Informatique de Modélisation et de leurs Applications. En début d’année, nous avons eu l’opportunité de proposer un projet en lien avec nos filières respectives, la F4 pour Mathis et la F5 pour Paul.
           </p>
           <p>
-            ASP.NET Boilerplate implements
-            <strong>NLayer architecture</strong> (Domain, Application,
-            Infrastructure and Presentation Layers) and
-            <strong>Domain Driven Design</strong> (Entities, Repositories,
-            Domain/Application Services, DTO's...). Also implements and provides
-            a good infrastructure to implement common software development
-            <strong>best practices</strong>.
-          </p>
-          <h3>What is Module Zero?</h3>
-          <p>
-            ASP.NET Boilerplate framework is designed to be independent of any
-            database schema and to be as generic as possible. Therefore, It
-            leaves some concepts
-            <strong>abstract</strong> and <strong>optional</strong> (like audit
-            logging, permission and setting stores) which requires some
-            <strong>data store</strong>.
+            Notre objectif était de concevoir un projet qui nous permettrait de manipuler des données de manière sécurisée et aisée, tout en intégrant des aspects d’intelligence artificielle. Nous cherchions à stimuler notre réflexion ainsi que notre sens de la conception et du développement.
           </p>
           <p>
-            <strong>Module Zero </strong>implements all fundamental concepts of
-            ASP.NET Boilerplate framework such as
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Tenant-Management"
-              >tenant management</a
-            >
-            (<strong>multi-tenancy</strong>),
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Role-Management"
-            >
-              role management </a
-            >,
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/User-Management"
-              >user management</a
-            >,
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Authorization"
-              >authorization</a
-            >
-            (<a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Permission-Management"
-            >
-              permission management </a
-            >),
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Setting-Management"
-              >setting management</a
-            >,
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Language-Management"
-            >
-              language management </a
-            >,
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Audit-Logging"
-              >audit logging</a
-            >
-            and so on.
+            Après mûre réflexion, nous avons décidé de créer un Proof of Concept (POC) pour un système de surveillance connecté. Ce système, équipé d’une webcam, permettrait la détection de mouvement avec reconnaissance des formes détectées. Nous avons imaginé ce dispositif comme une solution de surveillance pour les foyers, utile notamment en cas de départ en vacances.
           </p>
           <p>
-            Module-Zero defines entities and implements
-            <strong>domain logic</strong>
-            (domain layer) and leaves application and presentation layers to
-            you.
+            En accompagnement de la webcam, nous avons développé une application Web nommée "iWebcamProtect". Cette plateforme offre aux utilisateurs la possibilité de suivre l’état de leurs caméras au fil du temps. L’application permet de créer un compte de manière sécurisée ou de se connecter avec un compte Google. Une fois connecté, l'utilisateur peut ajouter une caméra et consulter les dernières informations, lui assurant de rester informé sur l’état de son foyer.
           </p>
-          <h4>Based on Microsoft ASP.NET Core Identity</h4>
           <p>
-            Module Zero is based on Microsoft's
-            <a
-              href="https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity"
-              target="_blank"
-              >ASP.NET Core Identity</a
-            >
-            library. It extends user and role managers and implements user and
-            role stores using generic repositories.
+            Pour assurer la liaison entre l’application web, la caméra et la base de données, nous avons développé une API, dont nous détaillerons les fonctionnalités par la suite.
           </p>
-          <h3>Documentation</h3>
+          <h3>Description du Projet</h3>
+          <p>
+            Le but de ce projet est de créer un POC d’un système de vidéosurveillance permettant de surveiller l’intérieur d’un logement grâce à la détection de mouvement. En plus de la détection, une application Web permettra de visualiser les données récoltées.
+          </p>
+          <p>
+            L’application Web disposera également d’une interface de gestion complète et intuitive pour les administrateurs, leur permettant de gérer les utilisateurs et leurs permissions. Un utilisateur pourra ajouter et visualiser l’état d’une caméra, ainsi qu’accéder aux images prises par celle-ci.
+          </p>
+          <p>
+            Cette application sera compatible avec tous les navigateurs Web. Nous l’avons développée avec le framework ASP.NET Boilerplate, qui regroupe deux technologies :
+          </p>
+          <ul>
+            <li>ASP.NET Core avec C# pour la partie backend</li>
+            <li>Angular avec TypeScript pour la partie frontend</li>
+          </ul>
+          <p>
+            La connexion à l’application se fait en créant un compte ou en utilisant la fonctionnalité SSO avec un compte Google grâce à Google API. Le développement des applications a été réalisé sous Visual Studio 2022 pour le backend et Visual Studio Code pour l’interface utilisateur.
+          </p>
+          <h3>Documentation et Code Source</h3>
+          <p>
+            Vous pouvez trouver plus d'informations sur le projet et sa documentation :
+          </p>
           <ul>
             <li>
-              <a
-                href="https://www.aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core"
-                >Documentation for this template</a
-              >
+              <a href="https://www.aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core">
+                Documentation pour ce template</a>
             </li>
             <li>
-              <a href="http://www.aspnetboilerplate.com/Pages/Documents"
-                >ASP.NET Boilerplate documentation</a
-              >
+              <a href="http://www.aspnetboilerplate.com/Pages/Documents">
+                Documentation ASP.NET Boilerplate</a>
             </li>
           </ul>
-          <h3>Source code</h3>
           <p>
-            This template is developed open source on Github. You can contribute
-            to the template.
-            <a
-              href="https://github.com/aspnetboilerplate/module-zero-core-template"
-              target="_blank"
-              >https://github.com/aspnetboilerplate/module-zero-core-template</a
-            >
+            Le code source de ce template est développé en open source sur Github. Vous pouvez contribuer au template :
+            <a href="https://github.com/aspnetboilerplate/module-zero-core-template">
+              https://github.com/aspnetboilerplate/module-zero-core-template</a>
           </p>
         </div>
       </div>

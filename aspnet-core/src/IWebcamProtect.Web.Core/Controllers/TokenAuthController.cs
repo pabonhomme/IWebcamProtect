@@ -141,13 +141,14 @@ namespace IWebcamProtect.Controllers
 
         private async Task<User> RegisterExternalUserAsync(ExternalAuthUserInfo externalUser)
         {
-            var user = await _userRegistrationManager.RegisterAsync(
+            var user = await _userRegistrationManager.RegisterExternalAsync(
                 externalUser.Name,
                 externalUser.Surname,
                 externalUser.EmailAddress,
                 externalUser.EmailAddress,
                 Authorization.Users.User.CreateRandomPassword(),
-                true
+                true,
+                externalUser.Picture
             );
 
             user.Logins = new List<UserLogin>

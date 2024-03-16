@@ -8,11 +8,12 @@ import { LayoutStoreService } from '@shared/layout/layout-store.service';
 })
 export class AppComponent extends AppComponentBase implements OnInit {
   sidebarExpanded: boolean;
+  userPicture: string;
 
   constructor(
     injector: Injector,
     private renderer: Renderer2,
-    private _layoutStore: LayoutStoreService
+    private _layoutStore: LayoutStoreService,
   ) {
     super(injector);
   }
@@ -40,6 +41,8 @@ export class AppComponent extends AppComponentBase implements OnInit {
     this._layoutStore.sidebarExpanded.subscribe((value) => {
       this.sidebarExpanded = value;
     });
+
+    this.userPicture = this.appSession.user.picture;
   }
 
   toggleSidebar(): void {

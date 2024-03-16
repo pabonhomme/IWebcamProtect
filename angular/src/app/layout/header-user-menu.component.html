@@ -2,12 +2,12 @@
   <a href="javascript:;" class="nav-link" dropdownToggle>
     <img
       class="user-image img-circle elevation-2"
-      src="assets/img/user.png"
+      [src]="userPicture"
       alt="User Image"
     />
   </a>
   <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-    <a class="dropdown-item" [routerLink]="['update-password']">
+    <a *ngIf="showUpdatePassword()" class="dropdown-item" [routerLink]="['update-password']">
       <i class="fas fa-user-edit"></i> {{ "UpdatePassword" | localize }}
     </a>
     <a class="dropdown-item" href="javascript:;" (click)="logout()">

@@ -2,7 +2,8 @@ import {
   Component,
   ChangeDetectionStrategy,
   Renderer2,
-  OnInit
+  OnInit,
+  Input
 } from '@angular/core';
 import { LayoutStoreService } from '@shared/layout/layout-store.service';
 
@@ -13,6 +14,8 @@ import { LayoutStoreService } from '@shared/layout/layout-store.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent implements OnInit {
+  @Input() userPicture: string;
+
   sidebarExpanded: boolean;
 
   constructor(

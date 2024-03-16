@@ -23,7 +23,6 @@ export class LoginComponent extends AppComponentBase implements OnInit{
 
   ngOnInit(): void {
     this.socialAuthService.authState.subscribe((user : SocialUser) => {
-      console.log(user)
       this.externalLogin(
         "ExternalAuth",
         user.id,

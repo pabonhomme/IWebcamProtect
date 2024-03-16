@@ -1,6 +1,6 @@
 <div class="wrapper">
-  <app-header></app-header>
-  <sidebar></sidebar>
+  <app-header [userPicture]="userPicture"></app-header>
+  <sidebar [userPicture]="userPicture"></sidebar>
   <div class="content-wrapper">
     <router-outlet></router-outlet>
   </div>

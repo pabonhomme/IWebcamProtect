@@ -2,7 +2,8 @@ import {
   Component,
   ChangeDetectionStrategy,
   Injector,
-  OnInit
+  OnInit,
+  Input
 } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 
@@ -13,6 +14,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 })
 export class SidebarUserPanelComponent extends AppComponentBase
   implements OnInit {
+  @Input() userPicture: string;
   shownLoginName = '';
 
   constructor(injector: Injector) {

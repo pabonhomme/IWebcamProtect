@@ -30,7 +30,8 @@ namespace IWebcamProtect.Authentication.Google
                     Name = payload.GivenName,
                     Surname = payload.FamilyName,
                     Provider = "ExternalAuth",
-                    ProviderKey = payload.Subject
+                    ProviderKey = payload.Subject,
+                    Picture = payload.Picture
                 };
             }
         }

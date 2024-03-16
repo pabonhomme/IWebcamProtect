@@ -30,5 +30,8 @@ namespace IWebcamProtect.Authorization.Users
 
             return user;
         }
+
+        public virtual string Picture { get; set; }
+
     }
 }
