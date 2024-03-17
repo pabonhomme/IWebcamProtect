@@ -1,4 +1,5 @@
-﻿using Abp.AutoMapper;
+﻿using Abp.Application.Services.Dto;
+using Abp.AutoMapper;
 using IWebcamProtect.Models;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,9 @@ using System.Threading.Tasks;
 namespace IWebcamProtect.Cameras.Input
 {
     [AutoMap(typeof(Camera))]
-    public class CreateCameraInput
+    public class UpdateCameraByCameraInput : EntityDto
     {
-        public string Reference { get; set; }
-
-        public string Name { get; set; }
-
-        public int State { get; set; }
-
-        public long? UserId { get; set; }
+        public DateTime? WatchTimeStart { get; set; }
+        public int WatchDuration { get; set; }
     }
 }

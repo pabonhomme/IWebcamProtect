@@ -265,30 +265,25 @@ export class CameraServiceProxy {
     }
 
     /**
+     * @param reference (optional) 
      * @param name (optional) 
-     * @param watchTimeStart (optional) 
-     * @param watchDuration (optional) 
      * @param state (optional) 
      * @param userId (optional) 
      * @return Success
      */
-    create(name: string | undefined, watchTimeStart: moment.Moment | undefined, watchDuration: number | undefined, state: number | undefined, userId: number | undefined): Observable<CameraDto> {
+    create(reference: string | undefined, name: string | undefined, state: number | undefined, userId: number | undefined): Observable<CameraDto> {
         let url_ = this.baseUrl + "/api/services/app/Camera/Create";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = new FormData();
+        if (reference === null || reference === undefined)
+            throw new Error("The parameter 'reference' cannot be null.");
+        else
+            content_.append("Reference", reference.toString());
         if (name === null || name === undefined)
             throw new Error("The parameter 'name' cannot be null.");
         else
             content_.append("Name", name.toString());
-        if (watchTimeStart === null || watchTimeStart === undefined)
-            throw new Error("The parameter 'watchTimeStart' cannot be null.");
-        else
-            content_.append("WatchTimeStart", watchTimeStart.toJSON());
-        if (watchDuration === null || watchDuration === undefined)
-            throw new Error("The parameter 'watchDuration' cannot be null.");
-        else
-            content_.append("WatchDuration", watchDuration.toString());
         if (state === null || state === undefined)
             throw new Error("The parameter 'state' cannot be null.");
         else
@@ -345,14 +340,12 @@ export class CameraServiceProxy {
 
     /**
      * @param name (optional) 
-     * @param watchTimeStart (optional) 
-     * @param watchDuration (optional) 
      * @param state (optional) 
      * @param userId (optional) 
      * @param id (optional) 
      * @return Success
      */
-    update(name: string | undefined, watchTimeStart: moment.Moment | undefined, watchDuration: number | undefined, state: number | undefined, userId: number | undefined, id: number | undefined): Observable<CameraDto> {
+    update(name: string | undefined, state: number | undefined, userId: number | undefined, id: number | undefined): Observable<CameraDto> {
         let url_ = this.baseUrl + "/api/services/app/Camera/Update";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -361,14 +354,6 @@ export class CameraServiceProxy {
             throw new Error("The parameter 'name' cannot be null.");
         else
             content_.append("Name", name.toString());
-        if (watchTimeStart === null || watchTimeStart === undefined)
-            throw new Error("The parameter 'watchTimeStart' cannot be null.");
-        else
-            content_.append("WatchTimeStart", watchTimeStart.toJSON());
-        if (watchDuration === null || watchDuration === undefined)
-            throw new Error("The parameter 'watchDuration' cannot be null.");
-        else
-            content_.append("WatchDuration", watchDuration.toString());
         if (state === null || state === undefined)
             throw new Error("The parameter 'state' cannot be null.");
         else
@@ -406,6 +391,75 @@ export class CameraServiceProxy {
     }
 
     protected processUpdate(response: HttpResponseBase): Observable<CameraDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CameraDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param watchTimeStart (optional) 
+     * @param watchDuration (optional) 
+     * @param id (optional) 
+     * @return Success
+     */
+    updateByCamera(watchTimeStart: moment.Moment | undefined, watchDuration: number | undefined, id: number | undefined): Observable<CameraDto> {
+        let url_ = this.baseUrl + "/api/services/app/Camera/UpdateByCamera";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (watchTimeStart === null || watchTimeStart === undefined)
+            throw new Error("The parameter 'watchTimeStart' cannot be null.");
+        else
+            content_.append("WatchTimeStart", watchTimeStart.toJSON());
+        if (watchDuration === null || watchDuration === undefined)
+            throw new Error("The parameter 'watchDuration' cannot be null.");
+        else
+            content_.append("WatchDuration", watchDuration.toString());
+        if (id === null || id === undefined)
+            throw new Error("The parameter 'id' cannot be null.");
+        else
+            content_.append("Id", id.toString());
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateByCamera(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateByCamera(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<CameraDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<CameraDto>;
+        }));
+    }
+
+    protected processUpdateByCamera(response: HttpResponseBase): Observable<CameraDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -3061,9 +3115,8 @@ export class CameraDto implements ICameraDto {
     isDeleted: boolean;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
+    reference: string | undefined;
     name: string | undefined;
-    watchTimeStart: moment.Moment | undefined;
-    watchDuration: number;
     state: number;
     detectionEvents: DetectionEventDto[] | undefined;
 
@@ -3086,9 +3139,8 @@ export class CameraDto implements ICameraDto {
             this.isDeleted = _data["isDeleted"];
             this.deleterUserId = _data["deleterUserId"];
             this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
+            this.reference = _data["reference"];
             this.name = _data["name"];
-            this.watchTimeStart = _data["watchTimeStart"] ? moment(_data["watchTimeStart"].toString()) : <any>undefined;
-            this.watchDuration = _data["watchDuration"];
             this.state = _data["state"];
             if (Array.isArray(_data["detectionEvents"])) {
                 this.detectionEvents = [] as any;
@@ -3115,9 +3167,8 @@ export class CameraDto implements ICameraDto {
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["reference"] = this.reference;
         data["name"] = this.name;
-        data["watchTimeStart"] = this.watchTimeStart ? this.watchTimeStart.toISOString() : <any>undefined;
-        data["watchDuration"] = this.watchDuration;
         data["state"] = this.state;
         if (Array.isArray(this.detectionEvents)) {
             data["detectionEvents"] = [];
@@ -3144,9 +3195,8 @@ export interface ICameraDto {
     isDeleted: boolean;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
+    reference: string | undefined;
     name: string | undefined;
-    watchTimeStart: moment.Moment | undefined;
-    watchDuration: number;
     state: number;
     detectionEvents: DetectionEventDto[] | undefined;
 }

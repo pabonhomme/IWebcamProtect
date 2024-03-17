@@ -4,6 +4,7 @@ using IWebcamProtect.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IWebcamProtect.Migrations
 {
     [DbContext(typeof(IWebcamProtectDbContext))]
-    partial class IWebcamProtectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240317121749_deletePropCamera")]
+    partial class deletePropCamera
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1610,9 +1613,6 @@ namespace IWebcamProtect.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Reference")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("State")

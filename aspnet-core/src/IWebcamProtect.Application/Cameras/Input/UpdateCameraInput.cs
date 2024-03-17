@@ -13,8 +13,7 @@ namespace IWebcamProtect.Cameras.Input
     public class UpdateCameraInput : EntityDto
     {
         public string Name { get; set; }
-        public DateTime? WatchTimeStart { get; set; }
-        public int WatchDuration { get; set; }
+
         public int State { get; set; }
 
         public long? UserId { get; set; }

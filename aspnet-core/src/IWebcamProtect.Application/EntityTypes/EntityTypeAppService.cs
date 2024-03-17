@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace IWebcamProtect.EntityTypes
 {
+    [AbpAuthorize(PermissionNames.Pages_EntityType)]
     public class EntityTypeAppService : AsyncCrudAppService<EntityType, EntityTypeDto, int, GetAllEntityTypeInput, CreateEntityTypeInput, UpdateEntityTypeInput, GetEntityTypeInput, DeleteEntityTypeInput>, IEntityTypeAppService
     {
         public EntityTypeAppService(IRepository<EntityType, int> repository) : base(repository)

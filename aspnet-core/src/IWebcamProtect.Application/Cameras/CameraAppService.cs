@@ -120,6 +120,15 @@ namespace IWebcamProtect.Cameras
             return cameraDto;
         }
 
+        public async Task<CameraDto> UpdateByCameraAsync([FromForm] UpdateCameraByCameraInput input)
+        {
+            if (input == null) throw new ArgumentNullException();
+
+            var camera = await Repository.UpdateAsync(ObjectMapper.Map<Camera>(input)); // update of the camera
+
+            return MapToEntityDto(camera);
+        }
+
         #endregion
     }
 }

@@ -44,6 +44,24 @@
     <text name="Logout" value="Déconnexion" />
     <text name="SearchWithThreeDot">Rechercher...</text>
 
+    <!--Added strings-->
+
+    <text name="YouCanManageYourCameras">Vous pouvez visualisez vos caméras sur cette page. Cliquez sur Nouveau pour ajouter une caméra à votre profil. Assurez-vous d'avoir la réference de la caméra écrite au dos de cette dernière</text>
+    <text name="ManageCameras">Gestion des caméras</text>
+    <text name="New">Nouveau</text>
+    <text name="Reference">Réference</text>
+    <text name="NameCamera">Nom</text>
+    <text name="NameCameraRequired">Le nom est requis</text>
+    <text name="ReferenceCameraRequired">La réference est requise</text>
+    <text name="State">Statut</text>
+    <text name="EditCamera">Modifier la caméra</text>
+    <text name="AddCamera">Ajouter une caméra</text>
+    
+    <text name="DeletedSucessfully">Suppression effectuée</text>
+    <text name="DeleteCameraConfirm">Supprimer la caméra et toutes ses données</text>
+    <text name="DeleteCamerasConfirm">Supprimer la ou les caméras selectionnées et toutes ses données</text>
+
+
     <!--Permissions-->
 
     <text name="EntityTypes">Types d'entité</text>
@@ -60,5 +78,7 @@
     <text name="ReadDetectionEvents">Voir les détections</text>
     <text name="EditDetectionEvents">Modifier les détections</text>
     <text name="DeleteDetectionEvents">Supprimer des détections</text>
+    
+    
   </texts>
 </localizationDictionary>

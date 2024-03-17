@@ -10,9 +10,9 @@ namespace IWebcamProtect.Models
 {
     public class Camera : FullAuditedEntity<int, User>
     {
+        public string Reference { get; set; }
         public string Name { get; set; }
-        public DateTime? WatchTimeStart { get; set; }
-        public int WatchDuration { get; set; }
+
         public int State { get; set; }
 
         public List<DetectionEvent> DetectionEvents { get; set; } = new List<DetectionEvent>();
