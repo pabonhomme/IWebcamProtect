@@ -2,7 +2,7 @@ import { Component, Injector, ChangeDetectionStrategy, OnInit } from '@angular/c
 import { AppComponentBase } from '@shared/app-component-base';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { CameraDto, CameraServiceProxy } from '@shared/service-proxies/service-proxies';
-import { forEach } from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './home.component.html',
@@ -19,9 +19,9 @@ export class HomeComponent extends AppComponentBase implements OnInit {
 
   selectedCameras!: CameraDto[] | null;
 
-  stateOptions: any[] = [{ label: 'Off', value: 0 }, { label: 'On', value: 1 }];
+  stateOptions: any[] = [{ label: 'On', value: 1 }, { label: 'Off', value: 0 }];
 
-  constructor(injector: Injector, private _cameraService: CameraServiceProxy) {
+  constructor(injector: Injector, private _cameraService: CameraServiceProxy, private router: Router,) {
     super(injector);
   }
   ngOnInit(): void {
@@ -38,10 +38,10 @@ export class HomeComponent extends AppComponentBase implements OnInit {
 
   getSeverity(state: number) {
     switch (state) {
+      case 0:
+        return 'warning';
       case 1:
         return 'success';
-      case 2:
-        return 'warning';
     }
   }
 
@@ -50,6 +50,10 @@ export class HomeComponent extends AppComponentBase implements OnInit {
     this.submitted = false;
     this.cameraDialog = true;
     console.log(this.camera.id)
+  }
+
+  showDetail(camera: CameraDto){
+    this.router.navigate(['/app/camera-detail', camera.id]);
   }
 
   editCamera(camera: CameraDto) {
@@ -69,8 +73,6 @@ export class HomeComponent extends AppComponentBase implements OnInit {
       }
     );
   }
-
-
 
   deleteOneCamera(camera: CameraDto) {
     abp.message.confirm(

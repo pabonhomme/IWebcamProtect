@@ -46,6 +46,9 @@
 
     <!--Added strings-->
 
+    <!--Cameras-->
+
+
     <text name="YouCanManageYourCameras">Vous pouvez visualisez vos caméras sur cette page. Cliquez sur Nouveau pour ajouter une caméra à votre profil. Assurez-vous d'avoir la réference de la caméra écrite au dos de cette dernière</text>
     <text name="ManageCameras">Gestion des caméras</text>
     <text name="New">Nouveau</text>
@@ -60,6 +63,11 @@
     <text name="DeletedSucessfully">Suppression effectuée</text>
     <text name="DeleteCameraConfirm">Supprimer la caméra et toutes ses données</text>
     <text name="DeleteCamerasConfirm">Supprimer la ou les caméras selectionnées et toutes ses données</text>
+
+    <!--Camera Detail-->
+
+    <text name="CameraDetail">Détail de la caméra</text>
+    <text name="CameraInfos">Informations sur la caméra</text>
 
 
     <!--Permissions-->

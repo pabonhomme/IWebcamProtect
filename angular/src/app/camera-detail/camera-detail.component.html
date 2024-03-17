@@ -1,0 +1,162 @@
+<div [@routerTransition]>
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h1>{{ "CameraDetail" | localize }}</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content px-2">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <p-card header="{{ 'CameraInfos' | localize }}">
+            <div class="d-flex justify-content-around align-items-center">
+              <div>
+                <label class="mr-3" for="reference">{{
+                  "Reference" | localize
+                }}</label>
+                <input
+                  type="text"
+                  pInputText
+                  id="reference"
+                  [disabled]="true"
+                  [value]="camera?.reference"
+                  style="color: black"
+                />
+              </div>
+
+              <div>
+                <label class="mr-3" for="name">{{
+                  "NameCamera" | localize
+                }}</label>
+                <input
+                  id="name"
+                  type="text"
+                  pInputText
+                  [disabled]="true"
+                  [value]="camera?.name"
+                  style="color: black"
+                />
+              </div>
+
+              <div>
+                <label class="mr-3" for="state">{{ "State" | localize }}</label>
+                <p-tag
+                  id="state"
+                  [value]="camera?.state == 1 ? 'ON' : 'OFF'"
+                  [severity]="getSeverityCameraState(camera?.state)"
+                ></p-tag>
+              </div>
+            </div>
+          </p-card>
+        </div>
+        <div class="card-body">
+          <p-carousel
+            [value]="detectionEvents"
+            [numVisible]="3"
+            [numScroll]="3"
+            [circular]="false"
+            [responsiveOptions]="responsiveOptions"
+          >
+            <ng-template let-detectionEvent pTemplate="item">
+              <div
+                class="card border-1 border-round m-2 text-center p-2"
+              >
+                <div class="mb-3">
+                  <img
+                    [src]="detectionEvent.imageBase64"
+                    [alt]="detectionEvent.entityType.label"
+                    class="img-fluid rounded shadow"
+                  />
+                </div>
+                <div>
+                  <h4 class="mb-1">{{ formatMomentDate(detectionEvent.detectedTime) }}</h4>
+                  <h5 class="mt-0 mb-3">
+                    {{ detectionEvent.entityType.label }}
+                  </h5>
+                  <p-tag
+                    [value]="
+                      getIconEntityType(
+                        detectionEvent.entityType.emergencyLevel
+                      )
+                    "
+                    [severity]="
+                      getSeverityEntityType(
+                        detectionEvent.entityType.emergencyLevel
+                      )
+                    "
+                  ></p-tag>
+                  <div
+                    class="mt-5 flex align-items-center justify-content-center gap-2"
+                  >
+                    <button
+                      pButton
+                      pRipple
+                      icon="pi pi-trash"
+                      class="p-button-rounded p-button-danger"
+                      (click)="deleteDetectionEvent(detectionEvent)"
+                    ></button>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-carousel>
+          <!-- <div class="row">
+            <div
+              class="col-xl-4 col-lg-6 col-md-6 mb-4"
+              *ngFor="let detectionEvent of detectionEvents"
+            >
+              <div
+                class="card border-1 border-round p-3"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-around"
+                >
+                  <span class="d-flex align-items-center gap-2">
+                    <i class="pi pi-info-circle"></i>
+                    <span class="font-weight-bold">{{
+                      detectionEvent.entityType.label
+                    }}</span>
+                  </span>
+                  <p-tag
+                    [value]="getIconEntityType(detectionEvent.entityType.emergencyLevel)"
+                    [severity]="
+                      getSeverityEntityType(
+                        detectionEvent.entityType.emergencyLevel
+                      )
+                    "
+                  ></p-tag>
+                </div>
+                <div
+                  class="card-body d-flex flex-column align-items-center gap-3 py-5"
+                >
+                  <img
+                    class="w-9 shadow-2 border-round"
+                    [src]="''"
+                    [alt]="detectionEvent.entityType.label"
+                  />
+                  <span class="font-semibold">{{
+                    detectionEvent.detectedTime
+                  }}</span>
+                </div>
+                <div
+                  class="card-footer d-flex align-items-center justify-content-center"
+                >
+                  <button
+                    class="btn btn-danger btn-sm p-button-rounded p-button-danger"
+                    (click)="deleteDetectionEvent(detectionEvent)"
+                  >
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

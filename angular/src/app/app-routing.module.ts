@@ -8,6 +8,7 @@ import { UsersComponent } from './users/users.component';
 import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
+import { CameraDetailComponent } from './camera-detail/camera-detail.component';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { ChangePasswordComponent } from './users/change-password/change-password
                 path: '',
                 component: AppComponent,
                 children: [
-                    { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
+                    { path: 'home', component: HomeComponent, data: { permission: 'Pages.Camera' }, canActivate: [AppRouteGuard] },
+                    { path: 'camera-detail/:id', component: CameraDetailComponent, data: { permission: 'Pages.Camera' },  canActivate: [AppRouteGuard] },
                     { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },

@@ -26,7 +26,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SelectButtonModule } from 'primeng/selectbutton';
-
+import { CardModule } from 'primeng/card';
+import { CarouselModule } from 'primeng/carousel';
 
 
 @NgModule({
@@ -41,7 +42,9 @@ import { SelectButtonModule } from 'primeng/selectbutton';
         InputTextModule,
         DialogModule,
         ConfirmDialogModule,
-        SelectButtonModule
+        SelectButtonModule,
+        CardModule,
+        CarouselModule
     ],
     declarations: [
         AbpPaginationControlsComponent,
@@ -67,7 +70,9 @@ import { SelectButtonModule } from 'primeng/selectbutton';
         InputTextModule,
         DialogModule,
         ConfirmDialogModule,
-        SelectButtonModule
+        SelectButtonModule,
+        CardModule,
+        CarouselModule
     ]
 })
 export class SharedModule {
