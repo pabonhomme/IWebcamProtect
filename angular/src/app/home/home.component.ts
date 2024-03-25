@@ -31,7 +31,6 @@ export class HomeComponent extends AppComponentBase implements OnInit {
   getCamerasByUser() {
     this._cameraService.getAllByUser(undefined)
       .subscribe((result) => {
-        console.log(result.items)
         this.cameras = result.items;
       });
   }
@@ -49,7 +48,6 @@ export class HomeComponent extends AppComponentBase implements OnInit {
     this.camera = new CameraDto();
     this.submitted = false;
     this.cameraDialog = true;
-    console.log(this.camera.id)
   }
 
   showDetail(camera: CameraDto){
@@ -58,7 +56,6 @@ export class HomeComponent extends AppComponentBase implements OnInit {
 
   editCamera(camera: CameraDto) {
     this.camera = new CameraDto(camera);
-    console.log(this.camera.id)
     this.cameraDialog = true;
   }
 
