@@ -56,7 +56,7 @@ export class CameraDetailComponent extends AppComponentBase implements OnInit {
   getSeverityCameraState(state: number) {
     switch (state) {
       case 0:
-        return 'warning';
+        return 'danger';
       case 1:
         return 'success';
     }

@@ -63,12 +63,12 @@ while True:
             person_detected = True
             cv2.rectangle(frame1, (x, y), (x + w, y + h), (255, 0, 0), 2)
             cv2.putText(frame1, "Person", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
-            capture_filename = os.path.join(capture_folder, f"person_{timestamp}.jpg")
+            capture_filename = os.path.join(capture_folder, f"person_{time.time()}.jpg")
             cv2.imwrite(capture_filename, frame1)
-            if time.time() - last_sent_time >= 1:
+            if time.time() - last_sent_time >= 2:
                 last_sent_time = time.time()
                 response = send_image("http://192.168.64.1:44311/api/services/app/DetectionEvent/Create", capture_filename,
-                                  timestamp, 1, 1, "xref")
+                                  timestamp, 1, 1, "XREF18212001")
                 print(response)
 
     if not person_detected:
@@ -76,19 +76,19 @@ while True:
             current_time = datetime.now(timezone.utc)
             timestamp = current_time.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
 
-            if cv2.contourArea(contour) < 10000:
+            if cv2.contourArea(contour) < 5000:
                 continue
 
             movement_detected = True
             (x, y, w, h) = cv2.boundingRect(contour)
             cv2.rectangle(frame1, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-            capture_filename = os.path.join(capture_folder, f"movement_{timestamp}.jpg")
+            capture_filename = os.path.join(capture_folder, f"movement_{time.time()}.jpg")
             cv2.imwrite(capture_filename, frame1)
-            if time.time() - last_sent_time >= 5:
+            if time.time() - last_sent_time >= 2:
                 last_sent_time = time.time()
                 response = send_image("http://192.168.64.1:44311/api/services/app/DetectionEvent/Create", capture_filename,
-                                      timestamp, 2, 1, "xref")
+                                      timestamp, 2, 1, "XREF18212001")
                 print(response)
 
     if movement_detected and not len(persons) == 0:
