@@ -3,6 +3,8 @@ import pandas as pd
 import time
 import os
 import requests
+from send import send_image
+from datetime import datetime, timezone
 
 
 # Initialiser la capture vidéo
@@ -22,6 +24,8 @@ if not os.path.exists(capture_folder):
 capture_folder_faces = "captures/motion/faces"
 if not os.path.exists(capture_folder):
     os.makedirs(capture_folder)
+
+last_sent_time = time.time()
 
 while True:
     _, frame = cap.read()
@@ -43,11 +47,18 @@ while True:
         movement_detected = True
         (x, y, w, h) = cv2.boundingRect(contour)
         cv2.rectangle(frame1, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        timestamp = time.strftime("%Y-%m-%d_%H-%M-%S")
+        current_time = datetime.now(timezone.utc)
+        timestamp = current_time.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
         capture_filename = os.path.join(capture_folder, f"person_{timestamp}.jpg")
         cv2.imwrite(capture_filename, frame1)
+        if time.time() - last_sent_time >= 5:
+            last_sent_time = time.time()
+            response = send_image("http://192.168.64.1:44311/api/services/app/DetectionEvent/Create", capture_filename,
+                                  str(timestamp), 1, 1, "xref")
+            print(response.text)
 
-    if movement_detected:
+
+    if movement_detected :
         # Mouvement détecté
         if not en_mouvement:
             start_time = time.time()
