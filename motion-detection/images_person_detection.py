@@ -13,6 +13,13 @@ mouvements = []
 en_mouvement = False
 start_time = None
 
+prev_frame_time = 0
+
+# used to record the time at which we processed current frame
+new_frame_time = 0
+
+fps_list = []
+
 # Créer le détecteur de personnes HOG
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
@@ -26,21 +33,23 @@ while True:
     if frame is None:
         break
 
+    new_frame_time = time.time()
+    fps = 1 / (new_frame_time - prev_frame_time)
+    prev_frame_time = new_frame_time
+    fps_list.append(fps)
+
     diff = cv2.absdiff(frame1, frame2)
     gray = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray, (5, 5), 0)
     _, thresh = cv2.threshold(blur, 20, 255, cv2.THRESH_BINARY)
     dilated = cv2.dilate(thresh, None, iterations=3)
     contours, _ = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-
     movement_detected = False
     for contour in contours:
         if cv2.contourArea(contour) < 15000:
             continue
 
         movement_detected = True
-        #(x, y, w, h) = cv2.boundingRect(contour)
-        #cv2.rectangle(frame1, (x, y), (x+w, y+h), (0, 255, 0), 2)
         timestamp = time.strftime("%Y-%m-%d_%H-%M-%S")
         capture_filename = os.path.join(capture_folder, f"person_{timestamp}.jpg")
         cv2.imwrite(capture_filename, frame1)
@@ -79,7 +88,7 @@ for filename in os.listdir(capture_folder):
         for i, (x, y, w, h) in enumerate(persons):
             if weights[i] > 0.7:
                 cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
-                cv2.putText(frame1, "Person", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+                cv2.putText(frame1, "Person", (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
 
                 # Enregistrer l'image avec les rectangles de détection
                 save_folder = "captures/images_person/detected"
@@ -95,3 +104,6 @@ df_mouvements = pd.DataFrame(mouvements)
 
 # Afficher le DataFrame
 print(df_mouvements)
+
+print(fps_list)
+print("FPS Moyen", sum(fps_list)/len(fps_list))

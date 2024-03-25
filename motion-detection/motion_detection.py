@@ -2,6 +2,8 @@ import cv2
 import pandas as pd
 import time
 import os
+import requests
+
 
 # Initialiser la capture vidéo
 cap = cv2.VideoCapture(0)
@@ -14,6 +16,10 @@ en_mouvement = False
 start_time = None
 
 capture_folder = "captures/motion"
+if not os.path.exists(capture_folder):
+    os.makedirs(capture_folder)
+
+capture_folder_faces = "captures/motion/faces"
 if not os.path.exists(capture_folder):
     os.makedirs(capture_folder)
 
@@ -36,7 +42,7 @@ while True:
 
         movement_detected = True
         (x, y, w, h) = cv2.boundingRect(contour)
-        cv2.rectangle(frame1, (x, y), (x+w, y+h), (0, 255, 0), 2)
+        cv2.rectangle(frame1, (x, y), (x + w, y + h), (0, 255, 0), 2)
         timestamp = time.strftime("%Y-%m-%d_%H-%M-%S")
         capture_filename = os.path.join(capture_folder, f"person_{timestamp}.jpg")
         cv2.imwrite(capture_filename, frame1)
@@ -68,3 +74,15 @@ df_mouvements = pd.DataFrame(mouvements)
 
 # Afficher le DataFrame
 print(df_mouvements)
+
+
+def send_image(url, image_path):
+    # Ouvrir l'image en mode binaire
+    with open(image_path, 'rb') as f_image:
+        nom_image = image_path.split("/")[-1]
+        files = {'image': (nom_image, f_image)}
+
+        # Envoyer la requête POST avec l'image
+        response = requests.post(url, files=files)
+
+        return response
