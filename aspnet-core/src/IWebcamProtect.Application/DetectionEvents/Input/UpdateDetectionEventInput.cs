@@ -12,7 +12,7 @@ namespace IWebcamProtect.DetectionEvents.Input
     [AutoMap(typeof(DetectionEvent))]
     public class UpdateDetectionEventInput : EntityDto
     {
-        public String? ImageBase64 { get; set; }
+        public string ImageBase64 { get; set; }
 
     }
 }

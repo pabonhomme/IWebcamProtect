@@ -15,7 +15,7 @@ namespace IWebcamProtect.DetectionEvents.Dto
     {
         public DateTime? DetectedTime { get; set; }
 
-        public String? ImageBase64 { get; set; }
+        public string ImageBase64 { get; set; }
 
         public EntityTypeDto EntityType { get; set; }
 

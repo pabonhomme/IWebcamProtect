@@ -38,7 +38,7 @@ export class HomeComponent extends AppComponentBase implements OnInit {
   getSeverity(state: number) {
     switch (state) {
       case 0:
-        return 'warning';
+        return 'danger';
       case 1:
         return 'success';
     }
@@ -104,12 +104,12 @@ export class HomeComponent extends AppComponentBase implements OnInit {
 
     if (this.camera.name?.trim()) {
       if (this.camera.id !== undefined) {
-        this._cameraService.update(this.camera.name, this.camera.state, this.appSession.userId, this.camera.id).subscribe(() => {
+        this._cameraService.update(this.camera.name, this.camera.state, this.camera.id).subscribe(() => {
           this.getCamerasByUser();
           this.notify.success(this.l("EditedSucessfully"));
         });
       } else {
-        this._cameraService.create(this.camera.reference, this.camera.name, this.camera.state, this.appSession.userId).subscribe(() => {
+        this._cameraService.create(this.camera.reference, this.camera.name, this.camera.state).subscribe(() => {
           this.getCamerasByUser();
           this.notify.success(this.l("AddedSucessfully"));
         });

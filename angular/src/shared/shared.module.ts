@@ -28,6 +28,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
+import { ImageModule } from 'primeng/image';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { CarouselModule } from 'primeng/carousel';
         ConfirmDialogModule,
         SelectButtonModule,
         CardModule,
-        CarouselModule
+        CarouselModule,
+        ImageModule
     ],
     declarations: [
         AbpPaginationControlsComponent,
@@ -72,7 +74,8 @@ import { CarouselModule } from 'primeng/carousel';
         ConfirmDialogModule,
         SelectButtonModule,
         CardModule,
-        CarouselModule
+        CarouselModule,
+        ImageModule
     ]
 })
 export class SharedModule {

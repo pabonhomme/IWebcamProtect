@@ -17,6 +17,5 @@ namespace IWebcamProtect.Cameras.Input
 
         public int State { get; set; }
 
-        public long? UserId { get; set; }
     }
 }

@@ -41,7 +41,11 @@ namespace IWebcamProtect.Cameras
 
             var entity = await AsyncQueryableExecuter.ToListAsync(query);
 
-            entity.FirstOrDefault().DetectionEvents = _detectionEventManager.GetAllByCamera(input.Id);
+            var detectionEvents = _detectionEventManager.GetAllByCamera(input.Id);
+            detectionEvents.Sort((d1, d2) => DateTime.Compare(d2.DetectedTime, d1.DetectedTime));
+
+            // Assigner la liste triée à l'entité
+            entity.FirstOrDefault().DetectionEvents = detectionEvents;
 
             return MapToEntityDto(entity.FirstOrDefault());
 
@@ -86,11 +90,6 @@ namespace IWebcamProtect.Cameras
         {
             if (input == null) throw new ArgumentNullException();
 
-            if (AbpSession.UserId.HasValue)
-            {
-                input.UserId = AbpSession.UserId;
-            }
-
             var cameraDto = await base.CreateAsync(input); // creation of the camera
 
             return cameraDto;
@@ -110,9 +109,13 @@ namespace IWebcamProtect.Cameras
         {
             if (input == null) throw new ArgumentNullException();
 
-            if (AbpSession.UserId.HasValue)
+            var query = Repository.GetAll().Where(e => e.Id == input.Id);
+
+            var entity = await AsyncQueryableExecuter.FirstOrDefaultAsync(query);
+
+            if(entity.CreatorUserId != AbpSession.UserId)
             {
-                input.UserId = AbpSession.UserId;
+                throw new UserFriendlyException("La caméra ne peut être modifiée que par son propriétaire");
             }
 
             var cameraDto = await base.UpdateAsync(input); // update of the camera

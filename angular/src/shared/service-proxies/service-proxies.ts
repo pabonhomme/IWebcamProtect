@@ -268,10 +268,9 @@ export class CameraServiceProxy {
      * @param reference (optional) 
      * @param name (optional) 
      * @param state (optional) 
-     * @param userId (optional) 
      * @return Success
      */
-    create(reference: string | undefined, name: string | undefined, state: number | undefined, userId: number | undefined): Observable<CameraDto> {
+    create(reference: string | undefined, name: string | undefined, state: number | undefined): Observable<CameraDto> {
         let url_ = this.baseUrl + "/api/services/app/Camera/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -288,10 +287,6 @@ export class CameraServiceProxy {
             throw new Error("The parameter 'state' cannot be null.");
         else
             content_.append("State", state.toString());
-        if (userId === null || userId === undefined)
-            throw new Error("The parameter 'userId' cannot be null.");
-        else
-            content_.append("UserId", userId.toString());
 
         let options_ : any = {
             body: content_,
@@ -341,11 +336,10 @@ export class CameraServiceProxy {
     /**
      * @param name (optional) 
      * @param state (optional) 
-     * @param userId (optional) 
      * @param id (optional) 
      * @return Success
      */
-    update(name: string | undefined, state: number | undefined, userId: number | undefined, id: number | undefined): Observable<CameraDto> {
+    update(name: string | undefined, state: number | undefined, id: number | undefined): Observable<CameraDto> {
         let url_ = this.baseUrl + "/api/services/app/Camera/Update";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -358,10 +352,6 @@ export class CameraServiceProxy {
             throw new Error("The parameter 'state' cannot be null.");
         else
             content_.append("State", state.toString());
-        if (userId === null || userId === undefined)
-            throw new Error("The parameter 'userId' cannot be null.");
-        else
-            content_.append("UserId", userId.toString());
         if (id === null || id === undefined)
             throw new Error("The parameter 'id' cannot be null.");
         else
@@ -666,39 +656,21 @@ export class DetectionEventServiceProxy {
     }
 
     /**
-     * @param detectedTime (optional) 
-     * @param imageBase64 (optional) 
-     * @param entityTypeId (optional) 
-     * @param cameraId (optional) 
+     * @param body (optional) 
      * @return Success
      */
-    create(detectedTime: moment.Moment | undefined, imageBase64: string | undefined, entityTypeId: number | undefined, cameraId: number | undefined): Observable<DetectionEventDto> {
+    create(body: CreateDetectionEventInput | undefined): Observable<DetectionEventDto> {
         let url_ = this.baseUrl + "/api/services/app/DetectionEvent/Create";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = new FormData();
-        if (detectedTime === null || detectedTime === undefined)
-            throw new Error("The parameter 'detectedTime' cannot be null.");
-        else
-            content_.append("DetectedTime", detectedTime.toJSON());
-        if (imageBase64 === null || imageBase64 === undefined)
-            throw new Error("The parameter 'imageBase64' cannot be null.");
-        else
-            content_.append("ImageBase64", imageBase64.toString());
-        if (entityTypeId === null || entityTypeId === undefined)
-            throw new Error("The parameter 'entityTypeId' cannot be null.");
-        else
-            content_.append("EntityTypeId", entityTypeId.toString());
-        if (cameraId === null || cameraId === undefined)
-            throw new Error("The parameter 'cameraId' cannot be null.");
-        else
-            content_.append("CameraId", cameraId.toString());
+        const content_ = JSON.stringify(body);
 
         let options_ : any = {
             body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
                 "Accept": "text/plain"
             })
         };
@@ -3389,6 +3361,65 @@ export interface IChangeUserLanguageDto {
     languageName: string;
 }
 
+export class CreateDetectionEventInput implements ICreateDetectionEventInput {
+    detectedTime: moment.Moment;
+    imageBase64: string | undefined;
+    entityTypeId: number;
+    cameraId: number;
+    cameraReference: string | undefined;
+
+    constructor(data?: ICreateDetectionEventInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.detectedTime = _data["detectedTime"] ? moment(_data["detectedTime"].toString()) : <any>undefined;
+            this.imageBase64 = _data["imageBase64"];
+            this.entityTypeId = _data["entityTypeId"];
+            this.cameraId = _data["cameraId"];
+            this.cameraReference = _data["cameraReference"];
+        }
+    }
+
+    static fromJS(data: any): CreateDetectionEventInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateDetectionEventInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["detectedTime"] = this.detectedTime ? this.detectedTime.toISOString() : <any>undefined;
+        data["imageBase64"] = this.imageBase64;
+        data["entityTypeId"] = this.entityTypeId;
+        data["cameraId"] = this.cameraId;
+        data["cameraReference"] = this.cameraReference;
+        return data;
+    }
+
+    clone(): CreateDetectionEventInput {
+        const json = this.toJSON();
+        let result = new CreateDetectionEventInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateDetectionEventInput {
+    detectedTime: moment.Moment;
+    imageBase64: string | undefined;
+    entityTypeId: number;
+    cameraId: number;
+    cameraReference: string | undefined;
+}
+
 export class CreateEntityTypeInput implements ICreateEntityTypeInput {
     label: string | undefined;
     description: string | undefined;
@@ -5217,6 +5248,7 @@ export interface ITenantLoginInfoDto {
 
 export class UpdateDetectionEventInput implements IUpdateDetectionEventInput {
     id: number;
+    imageBase64: string | undefined;
 
     constructor(data?: IUpdateDetectionEventInput) {
         if (data) {
@@ -5230,6 +5262,7 @@ export class UpdateDetectionEventInput implements IUpdateDetectionEventInput {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.imageBase64 = _data["imageBase64"];
         }
     }
 
@@ -5243,6 +5276,7 @@ export class UpdateDetectionEventInput implements IUpdateDetectionEventInput {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["imageBase64"] = this.imageBase64;
         return data;
     }
 
@@ -5256,6 +5290,7 @@ export class UpdateDetectionEventInput implements IUpdateDetectionEventInput {
 
 export interface IUpdateDetectionEventInput {
     id: number;
+    imageBase64: string | undefined;
 }
 
 export class UpdateEntityTypeInput implements IUpdateEntityTypeInput {

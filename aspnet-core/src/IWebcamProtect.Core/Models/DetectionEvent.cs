@@ -10,8 +10,8 @@ namespace IWebcamProtect.Models
 {
     public class DetectionEvent : Entity
     {
-        public DateTime? DetectedTime { get; set; }
-        public String? ImageBase64 { get; set; }
+        public DateTime DetectedTime { get; set; }
+        public string ImageBase64 { get; set; }
 
         [ForeignKey("EntityTypeId")]
         public EntityType EntityType { get; set; }

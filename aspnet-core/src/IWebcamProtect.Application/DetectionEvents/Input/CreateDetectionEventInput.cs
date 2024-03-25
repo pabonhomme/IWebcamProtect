@@ -13,11 +13,13 @@ namespace IWebcamProtect.DetectionEvents.Input
     {
         public DateTime DetectedTime { get; set; }
 
-        public String ImageBase64 { get; set; }
+        public string ImageBase64 { get; set; }
 
         public int EntityTypeId { get; set; }
 
         public int CameraId { get; set; }
+
+        public string CameraReference { get; set; }
 
     }
 }
